@@ -1,6 +1,6 @@
 ﻿# php_online_shop
 
-# git_commands
+### git_commands
 リモート環境から変更を取得する
 ```
 git pull
@@ -22,3 +22,6 @@ git status
 ```
 git push origin <ブランチ名>
 ```
+
+### Figma
+https://www.figma.com/design/yUMDjeW0lWGlNvupZrdcO2/PHP_OnLine_Shops?node-id=0-1&t=SUFp61xGebQMQ3f0-1 
