@@ -20,14 +20,7 @@ function loginCheck($sLoginId = "", $sLoginPass = ""){
         $sSql  = "";
 
         //データ検索のSQLを作成
-        $sSql .= "SELECT ";
-        $sSql .= "   * ";
-        $sSql .= "FROM ";
-        $sSql .= "   webapp09 ";
-        $sSql .= "WHERE ";
-        $sSql .= "  login_id = :login_id AND ";
-        $sSql .= "  login_pass = :login_pass ";
-
+        $sSql = "SELECT * FROM member WHERE login_id = :login_id AND login_pass = :login_pass";
 
         //ステートメントハンドラを作成
         $stmh = $pdo->prepare($sSql);
@@ -78,7 +71,7 @@ function getUserId($sLoginId = "", $sLoginPass = ""){
         $sSql .= "SELECT ";
         $sSql .= "   id ";
         $sSql .= "FROM ";
-        $sSql .= "   webapp09 ";
+        $sSql .= "   member ";
         $sSql .= "WHERE ";
         $sSql .= "  login_id = :login_id AND ";
         $sSql .= "  login_pass = :login_pass ";
@@ -133,7 +126,7 @@ function getUserName($sLoginId = "", $sLoginPass = ""){
         $sSql .= "   last_name, ";
         $sSql .= "   first_name ";
         $sSql .= "FROM ";
-        $sSql .= "   webapp09 ";
+        $sSql .= "   member ";
         $sSql .= "WHERE ";
         $sSql .= "  login_id = :login_id AND ";
         $sSql .= "  login_pass = :login_pass ";
@@ -679,7 +672,7 @@ function selectMember($sMemberId = "", $sLastName = ""){
 		$sSql .= "SELECT ";
 		$sSql .= "	 * ";
 		$sSql .= "FROM ";
-		$sSql .= "	 webapp09 ";
+		$sSql .= "	 member ";
 		
 		//データ検索の条件
 		if($sMemberId != ""){
@@ -735,7 +728,7 @@ function insertMember($sFirstName, $sLastName){
 
 	try {
 		//データ検索の条件
-		$sql = "INSERT INTO webapp09 (last_name, first_name)
+		$sql = "INSERT INTO member (last_name, first_name)
 				VALUES (:last_name, :first_name)";
 		
 		//ステートメントハンドラを作成
@@ -778,7 +771,7 @@ function updateMember($sMemberId, $sFirstName, $sLastName){
 	try {
 
 		//データ検索の条件
-		$sql = "UPDATE webapp09 
+		$sql = "UPDATE member 
 				SET
 					last_name = :last_name, 
 				    first_name = :first_name
@@ -824,7 +817,7 @@ function deleteMember($sMemberId){
 	try {
 
 		//データ検索の条件
-		$sql = "DELETE FROM webapp09 
+		$sql = "DELETE FROM member 
 				WHERE  id = :id
 		";
 		

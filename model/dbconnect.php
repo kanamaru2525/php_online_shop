@@ -4,9 +4,9 @@ function db_connect(){
 
     //データベース接続情報
     $host     = "127.0.0.1";
-    $dbname   = "webapp";
-    $user     = "webuser";
-    $password = "password";
+    $dbname   = "db1201462";
+    $user     = "shopuser";
+    $password = "shoppass";
 
     //DSNの作成
     $dsn = "mysql:host=".$host.";dbname=".$dbname.";charset=utf8";
