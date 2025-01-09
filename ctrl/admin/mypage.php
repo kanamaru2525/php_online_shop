@@ -36,7 +36,7 @@
 // ↑ここまでは top.php と一緒
 
     if($loginOk === false){
-        header("location: top.php");
+        header("location: index.php");
     }
 
 

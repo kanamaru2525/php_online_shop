@@ -37,6 +37,6 @@
 // HTMLを出力
 //**************************************************
     //画面へ表示
-    require_once(__DIR__ . '/../../view/admin/top.html');
+    require_once(__DIR__ . '/../../view/admin/index.html');
 
 ?>
