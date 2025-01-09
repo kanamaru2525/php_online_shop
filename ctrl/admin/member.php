@@ -25,11 +25,11 @@
 // 検索処理
 //**************************************************
     //ログインチェックを取得
-    $loginOk = loginCheck($sLoginId, $sLoginPass);
+    $loginOk = AdminCheck($sLoginId, $sLoginPass);
 
     //ログインOKならユーザ名を取得
     if($loginOk === true){
-        $userName = getUserName($sLoginId, $sLoginPass);
+        $userName = getAdminName($sLoginId, $sLoginPass);
     }
 
 //-------------------------------------------------------------------------------
