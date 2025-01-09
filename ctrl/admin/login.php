@@ -57,7 +57,7 @@
 // ログインチェック
 //**************************************************
     //ログインチェックを取得
-    $loginOk = loginCheck($sLoginId, $sLoginPass);
+    $loginOk = AdminCheck($sLoginId, $sLoginPass);
 
     //ログインチェックがOKなら
     if($loginOk === true){

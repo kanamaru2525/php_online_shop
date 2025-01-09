@@ -159,6 +159,165 @@ function getUserName($sLoginId = "", $sLoginPass = ""){
 }
 
 ####################################################################################
+### ユーザ関連
+####################################################################################
+/****************************************
+ * ログインチェック
+ * $sLoginId　：ログインID（未指定は空白）
+ * $sLoginPass：ログインパスワード（未指定は空白）
+ ****************************************/
+function AdminCheck($sLoginId = "", $sLoginPass = ""){
+
+    //初期化
+    $arrUser = array();
+
+    //データベース接続関数の呼び出し
+    $pdo = db_connect();
+
+    try {
+        //変数の準備
+        $sSql  = "";
+
+        //データ検索のSQLを作成
+        $sSql = "SELECT * FROM admin WHERE id = :login_id AND pass = :login_pass";
+
+        //ステートメントハンドラを作成
+        $stmh = $pdo->prepare($sSql);
+        $stmh->bindValue(':login_id',   $sLoginId,   PDO::PARAM_STR);
+        $stmh->bindValue(':login_pass', $sLoginPass, PDO::PARAM_STR);
+
+        //SQL文の実行
+        $stmh->execute();
+
+        //実行結果を取得
+        $arrUser = $stmh->fetch(PDO::FETCH_ASSOC);
+
+        //ログイン情報の有無を判定
+        if($arrUser !== false){
+            return true;
+        }
+
+    } catch (PDOException $Exception) {
+
+        //例外が発生したらエラーを出力
+        die('実行エラー（' . __FUNCTION__."）：".$Exception->getMessage()."<br />");
+
+    }
+
+    return false;
+
+}
+
+/****************************************
+ * ログインユーザのユーザIDを取得
+ * $sLoginId　：ログインID
+ * $sLoginPass：ログインパスワード
+ ****************************************/
+function getAdminId($sLoginId = "", $sLoginPass = ""){
+
+    //初期化
+    $arrUser = array();
+    $sUserId = "";
+
+    //データベース接続関数の呼び出し
+    $pdo = db_connect();
+
+    try {
+        //変数の準備
+        $sSql  = "";
+
+        //データ検索のSQLを作成
+        $sSql .= "SELECT ";
+        $sSql .= "   id ";
+        $sSql .= "FROM ";
+        $sSql .= "   admin ";
+        $sSql .= "WHERE ";
+        $sSql .= "  id = :login_id AND ";
+        $sSql .= "  pass = :login_pass ";
+
+
+        //ステートメントハンドラを作成
+        $stmh = $pdo->prepare($sSql);
+        $stmh->bindValue(':login_id',   $sLoginId,   PDO::PARAM_STR);
+        $stmh->bindValue(':login_pass', $sLoginPass, PDO::PARAM_STR);
+
+        //SQL文の実行
+        $stmh->execute();
+
+        //実行結果を取得
+        $arrUser = $stmh->fetch(PDO::FETCH_ASSOC);
+
+        //ユーザID取得
+        $sUserId = $arrUser["id"];
+
+
+    } catch (PDOException $Exception) {
+
+        //例外が発生したらエラーを出力
+        die('実行エラー（' . __FUNCTION__."）：".$Exception->getMessage()."<br />");
+
+    }
+
+    return $sUserId;
+
+}
+
+/****************************************
+ * ログインユーザ名取得
+ * $sLoginId　：ログインID
+ * $sLoginPass：ログインパスワード
+ ****************************************/
+function getAdminName($sLoginId = "", $sLoginPass = ""){
+
+    //初期化
+    $arrUser = array();
+    $sUserName = "";
+
+    //データベース接続関数の呼び出し
+    $pdo = db_connect();
+
+    try {
+        //変数の準備
+        $sSql  = "";
+
+        //データ検索のSQLを作成
+        $sSql .= "SELECT ";
+        $sSql .= "   * ";
+        $sSql .= "FROM ";
+        $sSql .= "   admin ";
+        $sSql .= "WHERE ";
+        $sSql .= "  id = :login_id AND ";
+        $sSql .= "  pass = :login_pass ";
+
+
+        //ステートメントハンドラを作成
+        $stmh = $pdo->prepare($sSql);
+        $stmh->bindValue(':login_id',   $sLoginId,   PDO::PARAM_STR);
+        $stmh->bindValue(':login_pass', $sLoginPass, PDO::PARAM_STR);
+
+        //SQL文の実行
+        $stmh->execute();
+
+        //実行結果を取得
+        $arrUser = $stmh->fetch(PDO::FETCH_ASSOC);
+
+        //ユーザ名取得
+        $sUserName = $arrUser["id"];
+
+
+    } catch (PDOException $Exception) {
+
+        //例外が発生したらエラーを出力
+        die('実行エラー（' . __FUNCTION__."）：".$Exception->getMessage()."<br />");
+
+    }
+
+    return $sUserName;
+
+}
+
+
+####################################################################################
 ### 商品関連
 ####################################################################################
 /****************************************
@@ -840,7 +999,6 @@ function deleteMember($sMemberId){
 	
 		//登録失敗を返却
 		return false;
-
 	}
 
 }
