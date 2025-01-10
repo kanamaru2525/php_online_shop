@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja"> 
+<head> 
+    <meta charset="utf-8"> 
+    <link href="../common/css/normalize.css" rel="stylesheet" type="text/css"> 
+    <link href="../common/css/main.css" rel="stylesheet" type="text/css"> 
+</head> 
+<body style="background-color: #ffeeee;"> 
+    <h1>商品の検索</h1> 
+    <h2>検索条件</h2> 
+ 
+    <?php if($loginOk === true){ ?> 
+    <div>ようこそ！ <?= $userName ?> 様</div> 
+    <a href="logout.php">ログアウト</a> 
+    <?php } else { ?> 
+    <a href="login.php">ログイン</a> 
+    <?php } ?> 
+ 
+    <h1>商品の検索</h1> 
+    <h2>検索条件</h2> 
+    <form action="items.php" method="post"> 
+    <table class="searchTbl"> 
+        <tr> 
+            <th>ID</th> 
+            <td><input type="text" name="id" value="<?= $sItemId ?>" /></td> 
+        </tr> 
+        <tr> 
+            <th>商品名</th> 
+            <td><input type="text" name="name" value="<?= $sItem_name ?>" /></td> 
+        </tr> 
+        <tr> 
+            <th>販売有無</th> 
+            <td>
+                <select name="sales_stop">
+                    <option value="" <?= $sSales_Stop === null || $sSales_Stop === '' ? 'selected' : '' ?>>全て</option>
+                    <option value="0" <?= $sSales_Stop === '0' ? 'selected' : '' ?>>販売中</option>
+                    <option value="1" <?= $sSales_Stop === '1' ? 'selected' : '' ?>>販売停止</option>
+                </select>
+            </td> 
+        </tr> 
+    </table> 
+    <div class="btnArea"> 
+        <input type="submit" value="検索" /> 
+    </div> 
+    </form> 
+    <br /> 
+ 
+    <h2>検索結果</h2> 
+    <table class="resultTbl"> 
+    <tr> 
+        <th>商品ID</th> 
+        <th>商品名</th> 
+        <th>商品価格</th> 
+        <th>商品説明</th> 
+        <th>商品在庫</th> 
+        <th>カテゴリー</th> 
+        <th>販売中止</th> 
+        <th>編集</th> 
+        <th>削除</th> 
+    </tr> 
+    <?php foreach($arrResult as $item){ ?> 
+    <tr> 
+        <td><?= $item['item_id'] ?></td> 
+        <td><?= $item['item_name'] ?></td> 
+        <td><?= $item['item_price'] ?></td> 
+        <td><?= $item['item_exp'] ?></td> 
+        <td><?= $item['item_stock'] ?></td> 
+        <td><?= $item['category_id'] ?></td> 
+        <td class="btn">  
+            <form action="i_update_status.php" method="post">  
+                <input type="submit" value="<?= isset($item['sales_stop']) && $item['sales_stop'] ? '販売開始' : '販売中止' ?>">  
+                <input type="hidden" name="id" value="<?= $item['item_id'] ?>">  
+                <input type="hidden" name="sales_stop" value="<?= isset($item['sales_stop']) ? $item['sales_stop'] : 0 ?>">  
+            </form>  
+        </td> 
+        <td class="btn"> 
+            <form action="i_update.php" method="post"> 
+                <input type="submit" value="変更"> 
+                <input type="hidden" name="id" value="<?= $item['item_id'] ?>"> 
+            </form> 
+        </td> 
+        <td class="btn"> 
+            <form action="i_delete.php" method="post"> 
+                <input type="submit" value="削除"> 
+                <input type="hidden" name="id" value="<?= $item['item_id'] ?>"> 
+            </form> 
+        </td> 
+    </tr> 
+    <?php } ?> 
+    </table> 
+ 
+    <a href="i_insert.php">商品を新しく登録する</a> 
+ 
+    <ul> 
+        <li> 
+            <a href="index.php">トップページへ戻る</a> 
+        </li> 
+    </ul> 
+ 
+</body> 
+</html> 

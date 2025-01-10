@@ -909,9 +909,6 @@ function insertMember($sFirstName, $sLastName){
 		//例外が発生したらエラーを出力
 		die('実行エラー :' . $Exception->getMessage()."<br />");
 	
-		//登録失敗を返却
-		return false;
-
 	}
 
 }
@@ -991,6 +988,141 @@ function deleteMember($sMemberId){
 		
 		//登録成功を返却
 		return true;
+	
+	} catch (PDOException $Exception) {
+	
+		//例外が発生したらエラーを出力
+		die('実行エラー :' . $Exception->getMessage()."<br />");
+	
+		//登録失敗を返却
+		return false;
+	}
+
+}
+/**************************************** 
+ * admin商品一覧取得 
+ * $keyword, 
+ * $sItem_Id, 
+ * $salesStop
+ ****************************************/ 
+function AdminSelectItem($keyword, $sItem_Id, $sSalesStop) { 
+ 
+    //初期化 
+    $arrItem = array(); 
+    $sWhere = ""; 
+ 
+    //データベース接続関数の呼び出し 
+    $pdo = db_connect(); 
+ 
+    try { 
+        //データ検索のSQLを作成 
+        $sSql  = ""; 
+        $sSql .= "SELECT "; 
+        $sSql .= "   A.item_id, "; 
+        $sSql .= "   A.item_name, "; 
+        $sSql .= "   A.item_exp, "; 
+        $sSql .= "   A.item_price, "; 
+        $sSql .= "   A.item_stock, "; 
+        $sSql .= "   A.category_id, "; 
+        $sSql .= "   A.sales_stop, "; 
+        $sSql .= "   A.item_image, "; 
+        $sSql .= "   B.category_name "; 
+        $sSql .= "FROM "; 
+        $sSql .= "   item A "; 
+        $sSql .= "LEFT JOIN "; 
+        $sSql .= "   category B "; 
+        $sSql .= "ON "; 
+        $sSql .= "   A.category_id = B.category_id "; 
+ 
+        //データ検索の条件 
+        if ($keyword != "") { 
+            // キーワード検索 
+            $sWhere .= ($sWhere == "") ? "WHERE " : "AND "; 
+            $sWhere .= "A.item_name LIKE :item_name "; 
+        } 
+        if ($sItem_Id != "") { 
+            // 商品ID検索 
+            $sWhere .= ($sWhere == "") ? "WHERE " : "AND "; 
+            $sWhere .= "A.item_id = :item_id "; 
+        } 
+        if ($sSalesStop !== null) {  
+            $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";  
+            $sWhere .= "A.sales_stop = :sales_stop ";  
+        } else {
+            // null の場合は 0 または 1 を検索
+            $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";  
+            $sWhere .= "(A.sales_stop = 0 OR A.sales_stop = 1) ";
+        }
+        
+ 
+        // ステートメントハンドラを作成 
+        $stmh = $pdo->prepare($sSql . $sWhere); 
+ 
+        // バインドの実行 
+        if ($keyword != "") { 
+            $stmh->bindValue(':item_name', "%" . $keyword . "%", PDO::PARAM_STR); 
+        } 
+        if ($sItem_Id != "") { 
+            $stmh->bindValue(':item_id', $sItem_Id, PDO::PARAM_INT); 
+        } 
+        if ($sSalesStop !== null) { 
+            $stmh->bindValue(':Sales_Stop', $sSalesStop, PDO::PARAM_BOOL); 
+        } 
+ 
+        // SQL文の実行 
+        $stmh->execute(); 
+ 
+        // 実行結果を取得 
+        $arrItem = $stmh->fetchAll(PDO::FETCH_ASSOC); 
+ 
+    } catch (PDOException $Exception) { 
+        // 例外が発生したらエラーを出力 
+        die('実行エラー（' . __FUNCTION__ . "）：" . $Exception->getMessage() . "<br />"); 
+    } 
+ 
+    return $arrItem; 
+}
+
+
+/****************************************
+ * itemの登録  
+ ****************************************/
+function insertItem($sItem_Id,$sItem_name,$sItem_price,$sItem_exp,$sCategory_id,$sItem_stock,$sSales_Stop){
+
+	//データベース接続関数の呼び出し
+	$pdo = db_connect();
+
+	try {
+		//データ検索の条件
+		$sql = "INSERT INTO item (item_name, item_exp, item_price, item_stock, category_id, sales_stop, item_image)
+				VALUES (:item_name, :item_exp,:item_price,:item_stock,:category_id,:sales_stop,:item_image)";
+		
+		//ステートメントハンドラを作成
+		$stmh = $pdo->prepare($sql);
+		
+        // 画像ファイル名を生成
+        $imageFileName = "temp.png";
+
+        // バインドの実行
+        $stmh->bindValue(':item_name',  $sItem_name,  PDO::PARAM_STR); 
+        $stmh->bindValue(':item_exp',   $sItem_exp,   PDO::PARAM_STR); 
+        $stmh->bindValue(':item_price', $sItem_price, PDO::PARAM_INT); 
+        $stmh->bindValue(':item_stock', $sItem_stock, PDO::PARAM_INT); 
+        $stmh->bindValue(':category_id', $sCategory_id, PDO::PARAM_INT); 
+        $stmh->bindValue(':sales_stop', $sSales_Stop, PDO::PARAM_BOOL);
+        $stmh->bindValue(':item_image', $imageFileName, PDO::PARAM_STR);
+		
+		//SQL文の実行
+		$stmh->execute();
+
+        // 登録した商品のIDを取得
+        $itemId = $pdo->lastInsertId();
+
+        // 画像ファイル名を商品IDベースに更新
+        $imageFileName = $itemId . ".png";
+
+        //登録成功を返却
+        return true;
 	
 	} catch (PDOException $Exception) {
 	
