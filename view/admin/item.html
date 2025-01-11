@@ -66,12 +66,8 @@
         <td><?= $item['item_exp'] ?></td> 
         <td><?= $item['item_stock'] ?></td> 
         <td><?= $item['category_id'] ?></td> 
-        <td class="btn">  
-            <form action="i_update_status.php" method="post">  
-                <input type="submit" value="<?= isset($item['sales_stop']) && $item['sales_stop'] ? '販売開始' : '販売中止' ?>">  
-                <input type="hidden" name="id" value="<?= $item['item_id'] ?>">  
-                <input type="hidden" name="sales_stop" value="<?= isset($item['sales_stop']) ? $item['sales_stop'] : 0 ?>">  
-            </form>  
+        <td>  
+            <?= $item['sales_stop'] == 1 ? '停止中' : '販売中' ?>
         </td> 
         <td class="btn"> 
             <form action="i_update.php" method="post"> 
