@@ -35,26 +35,27 @@
 
     $sItem_stock =  isset($_POST['item_stock']) ? $_POST['item_stock'] : "";
 
-    $sSales_Stop = isset($_POST['Sales_Stop']) ? $_POST['Sales_Stop'] : "";
+    $sSales_Stop = isset($_POST['sales_stop']) ? $_POST['sales_stop'] : null;
 
+    $null = null;
+    
     //処理ステップ
     $nStepFlg = isset($_POST['step']) ? $_POST['step'] : "";
-
 
 //**************************************************
 // STEP0（検索処理）
 //**************************************************
 if ($nStepFlg == "") {
     // 初期ステップ：商品情報を取得してフォームに表示
-    $arrResult = selectItem($sItem_Id, $sCategory_id);
-    $sItem_Id = $arrResult[0]['item_id'];
+    $arrResult =  AdminSelectItem($sItem_name, $sItem_Id, $null);
     $sItem_name = $arrResult[0]['item_name'];
     $sItem_price = $arrResult[0]['item_price'];
     $sItem_exp = $arrResult[0]['item_exp'];
     $sCategory_id = $arrResult[0]['category_id'];
     $sItem_stock = $arrResult[0]['item_stock'];
-    $sSales_Stop = isset($arrResult[0]['Sales_Stop']) ? $arrResult[0]['Sales_Stop'] : "";
+    $sSales_Stop = isset($arrResult[0]['sales_stop']) ? $arrResult[0]['sales_stop'] : "";
 } 
+ 
 
 //**************************************************
 // STEP1（確認画面）
@@ -65,7 +66,7 @@ if($nStepFlg == 1 || $nStepFlg == 2){
     if($sItem_name == ""){
         $arrErr['item_name'] = "商品名を入力してください";
     }
-    else if(mb_strlen($sItem_name, "UTF-8") > 20) {
+    else if(mb_strlen($sItem_name, "UTF-8") > 50) {
         $arrErr['item_name'] = "商品名は20文字以内で入力してください";
     }
 
@@ -73,8 +74,8 @@ if($nStepFlg == 1 || $nStepFlg == 2){
     if ($sItem_price == "") { 
         $arrErr['item_price'] = "商品価格を入力してください"; 
     } 
-    else if (!preg_match('/^[a-zA-Z0-9]+$/', $sItem_price)) { 
-        $arrErr['item_price'] = "商品価格は半角英数字で入力してください"; 
+    else if (!preg_match('/^\d+$/', $sItem_price)) { 
+        $arrErr['item_price'] = "商品価格は半角数字で入力してください"; 
     }
 
     // 商品説明
@@ -94,15 +95,18 @@ if($nStepFlg == 1 || $nStepFlg == 2){
     if ($sItem_stock == "") { 
         $arrErr['item_stock'] = "商品在庫を入力してください"; 
     } 
-    else if (!preg_match('/^[a-zA-Z0-9]+$/', $sItem_stock)) {  
+    else if (!preg_match('/^\d+$/', $sItem_stock)) {  
         $arrErr['item_stock'] = "販売停止は半角英数字で入力してください";  
     }
 
+    echo "sSales_Stopの確認<br>";
+    echo $sSales_Stop;
+
     // 販売管理 
-    if ($sSales_Stop === "") { 
-        $arrErr['Sales_Stop'] = "販売状態を選択してください（値が空です）。";
+    if ($sSales_Stop == "") { 
+        $arrErr['sales_stop'] = "販売状態を選択してください（値が空です）。";
     } else if (!in_array($sSales_Stop, ["0", "1"])) { 
-        $arrErr['Sales_Stop'] = "無効な販売状態です（送信された値: $sSales_Stop）。";
+        $arrErr['sales_stop'] = "無効な販売状態です（送信された値: $sSales_Stop）。";
     }
     
         //入力エラーがある場合は最初のステップに戻す

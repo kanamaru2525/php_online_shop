@@ -41,7 +41,7 @@
     //itemID
     $sItem_name = isset($_POST['name']) ? $_POST['name'] : "";    
     //ID
-    $sItemId = isset($_POST['id']) ? $_POST['id'] : "";
+    $sItemId = isset($_POST['item_id']) ? $_POST['item_id'] : "";
     //ID
     $sSales_Stop = isset($_POST['sales_stop']) ? $_POST['sales_stop'] : null;
 
@@ -49,7 +49,6 @@
         $sSales_Stop = null; // 明確にnullとして扱う
     }
     
-
 //**************************************************
 // 検索処理
 //**************************************************

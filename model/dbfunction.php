@@ -1005,7 +1005,7 @@ function deleteMember($sMemberId){
  * $sItem_Id, 
  * $salesStop
  ****************************************/ 
-function AdminSelectItem($keyword, $sItem_Id, $sSalesStop) { 
+function AdminSelectItem($keyword, $sItem_Id, $sSales_Stop) { 
  
     //初期化 
     $arrItem = array(); 
@@ -1016,42 +1016,39 @@ function AdminSelectItem($keyword, $sItem_Id, $sSalesStop) {
  
     try { 
         //データ検索のSQLを作成 
-        $sSql  = ""; 
-        $sSql .= "SELECT "; 
-        $sSql .= "   A.item_id, "; 
-        $sSql .= "   A.item_name, "; 
-        $sSql .= "   A.item_exp, "; 
-        $sSql .= "   A.item_price, "; 
-        $sSql .= "   A.item_stock, "; 
-        $sSql .= "   A.category_id, "; 
-        $sSql .= "   A.sales_stop, "; 
-        $sSql .= "   A.item_image, "; 
-        $sSql .= "   B.category_name "; 
-        $sSql .= "FROM "; 
-        $sSql .= "   item A "; 
-        $sSql .= "LEFT JOIN "; 
-        $sSql .= "   category B "; 
-        $sSql .= "ON "; 
-        $sSql .= "   A.category_id = B.category_id "; 
+        $sSql  = "";  
+        $sSql .= "SELECT ";  
+        $sSql .= "   item_id, ";  
+        $sSql .= "   item_name, ";  
+        $sSql .= "   item_exp, ";  
+        $sSql .= "   item_price, ";  
+        $sSql .= "   item_stock, ";  
+        $sSql .= "   category_id, ";  
+        $sSql .= "   sales_stop, ";  
+        $sSql .= "   item_image ";  
+        $sSql .= "FROM ";  
+        $sSql .= "   item  ";
+        
  
         //データ検索の条件 
         if ($keyword != "") { 
             // キーワード検索 
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND "; 
-            $sWhere .= "A.item_name LIKE :item_name "; 
+            $sWhere .= "item_name LIKE :item_name "; 
         } 
         if ($sItem_Id != "") { 
             // 商品ID検索 
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND "; 
-            $sWhere .= "A.item_id = :item_id "; 
+            $sWhere .= "item_id = :item_id "; 
         } 
-        if ($sSalesStop !== null) {  
+        
+        if ($sSales_Stop !== null) {  
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";  
-            $sWhere .= "A.sales_stop = :sales_stop ";  
+            $sWhere .= "sales_stop = :sales_stop ";  
         } else {
             // null の場合は 0 または 1 を検索
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";  
-            $sWhere .= "(A.sales_stop = 0 OR A.sales_stop = 1) ";
+            $sWhere .= "(sales_stop = 0 OR sales_stop = 1) ";
         }
         
  
@@ -1062,11 +1059,13 @@ function AdminSelectItem($keyword, $sItem_Id, $sSalesStop) {
         if ($keyword != "") { 
             $stmh->bindValue(':item_name', "%" . $keyword . "%", PDO::PARAM_STR); 
         } 
+
         if ($sItem_Id != "") { 
             $stmh->bindValue(':item_id', $sItem_Id, PDO::PARAM_INT); 
         } 
-        if ($sSalesStop !== null) { 
-            $stmh->bindValue(':Sales_Stop', $sSalesStop, PDO::PARAM_BOOL); 
+
+        if ($sSales_Stop !== null) { 
+            $stmh->bindValue(':sales_stop', $sSales_Stop, PDO::PARAM_INT); 
         } 
  
         // SQL文の実行 
@@ -1109,7 +1108,7 @@ function insertItem($sItem_Id,$sItem_name,$sItem_price,$sItem_exp,$sCategory_id,
         $stmh->bindValue(':item_price', $sItem_price, PDO::PARAM_INT); 
         $stmh->bindValue(':item_stock', $sItem_stock, PDO::PARAM_INT); 
         $stmh->bindValue(':category_id', $sCategory_id, PDO::PARAM_INT); 
-        $stmh->bindValue(':sales_stop', $sSales_Stop, PDO::PARAM_BOOL);
+        $stmh->bindValue(':sales_stop', $sSales_Stop, PDO::PARAM_INT);
         $stmh->bindValue(':item_image', $imageFileName, PDO::PARAM_STR);
 		
 		//SQL文の実行
@@ -1135,23 +1134,8 @@ function insertItem($sItem_Id,$sItem_name,$sItem_price,$sItem_exp,$sCategory_id,
 }
 
 /****************************************
- * updateItemの選択
- ****************************************/
-function selectUpdateItem($item_id) {
-    $pdo = db_connect();
-    $sql = "SELECT * FROM item WHERE item_id = :item_id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':item_id', $item_id, PDO::PARAM_STR);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/****************************************
  * itemの変更
  ****************************************/
-/**************************************** 
- * itemの変更 
- ****************************************/ 
 function updateItem($sItem_Id, $sItem_name, $sItem_price, $sItem_exp, $sCategory_id, $sItem_stock, $sSales_Stop){ 
  
     //データベース接続関数の呼び出し 
@@ -1182,11 +1166,11 @@ function updateItem($sItem_Id, $sItem_name, $sItem_price, $sItem_exp, $sCategory
         $stmh->bindValue(':item_exp', $sItem_exp, PDO::PARAM_STR); 
         $stmh->bindValue(':item_stock', $sItem_stock, PDO::PARAM_STR); 
         $stmh->bindValue(':category_id', $sCategory_id, PDO::PARAM_STR); 
-        $stmh->bindValue(':sales_stop', $sSales_Stop, PDO::PARAM_STR); 
+        $stmh->bindValue(':sales_stop', $sSales_Stop ? 1 : 0, PDO::PARAM_INT);
  
         //SQL文の実行 
         $stmh->execute(); 
- 
+        
         //登録成功を返却 
         return true; 
  

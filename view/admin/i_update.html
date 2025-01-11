@@ -61,15 +61,19 @@
                     <span class="err"><?= isset($arrErr['item_stock']) ? $arrErr['item_stock'] : "" ?></span>
                 </td>
             </tr>
-            <tr>   
+            <tr>     
                 <th>販売管理</th>   
                 <td>   
-                    <input type="radio" name="Sales_Stop" value="0"  <?= $sSales_Stop == "0" ? "checked" : "" ?>> 販売中  
-                    <input type="radio" name="Sales_Stop" value="1"  <?= $sSales_Stop == "1" ? "checked" : "" ?>> 販売停止  
-                    <br />  
-                    <span class="err"><?= isset($arrErr['Sales_Stop']) ? $arrErr['Sales_Stop'] : "" ?></span>  
+                    <?= $sSales_Stop ?>
+                    <select name="sales_stop"> 
+                        <option value="">選択してください</option> 
+                        <option value="0" <?= $sSales_Stop == "0" ? "selected" : "" ?>>販売中  </option> 
+                        <option value="1" <?= $sSales_Stop == "1" ? "selected" : "" ?>>販売停止</option> 
+                    </select> 
+                    <span class="err"><br><?= isset($arrErr['sales_stop']) ? $arrErr['sales_stop'] : "" ?></span>  
                 </td>   
             </tr> 
+            
             
         </table>
 

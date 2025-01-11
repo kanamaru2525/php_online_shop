@@ -4,6 +4,8 @@
     <meta charset="utf-8"> 
     <link href="../common/css/normalize.css" rel="stylesheet" type="text/css"> 
     <link href="../common/css/main.css" rel="stylesheet" type="text/css"> 
+
+    
 </head> 
 <body style="background-color: #ffeeee;"> 
     <h1>商品の検索</h1> 
@@ -71,8 +73,8 @@
         </td> 
         <td class="btn"> 
             <form action="i_update.php" method="post"> 
-                <input type="submit" value="変更"> 
-                <input type="hidden" name="id" value="<?= $item['item_id'] ?>"> 
+                <input type="submit" value="変更<?= $item['item_id'] ?>"> 
+                <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>"> 
             </form> 
         </td> 
         <td class="btn"> 
