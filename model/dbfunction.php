@@ -1132,6 +1132,75 @@ function insertItem($sItem_Id,$sItem_name,$sItem_price,$sItem_exp,$sCategory_id,
 		//登録失敗を返却
 		return false;
 	}
-
 }
+
+/****************************************
+ * updateItemの選択
+ ****************************************/
+function selectUpdateItem($item_id) {
+    $pdo = db_connect();
+    $sql = "SELECT * FROM item WHERE item_id = :item_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':item_id', $item_id, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/****************************************
+ * itemの変更
+ ****************************************/
+/**************************************** 
+ * itemの変更 
+ ****************************************/ 
+function updateItem($sItem_Id, $sItem_name, $sItem_price, $sItem_exp, $sCategory_id, $sItem_stock, $sSales_Stop){ 
+ 
+    //データベース接続関数の呼び出し 
+    $pdo = db_connect(); 
+ 
+    try { 
+ 
+        //データ検索の条件 
+        $sql = "UPDATE item  
+                SET 
+                    item_name = :item_name,  
+                    item_exp = :item_exp, 
+                    item_price = :item_price, 
+                    item_stock = :item_stock, 
+                    category_id = :category_id,  
+                    sales_stop = :sales_stop 
+                WHERE 
+                    item_id = :id
+        "; 
+ 
+        //ステートメントハンドラを作成 
+        $stmh = $pdo->prepare($sql); 
+ 
+        //バインドの実行 
+        $stmh->bindValue(':id', $sItem_Id, PDO::PARAM_INT); 
+        $stmh->bindValue(':item_name', $sItem_name, PDO::PARAM_STR); 
+        $stmh->bindValue(':item_price', $sItem_price, PDO::PARAM_STR); 
+        $stmh->bindValue(':item_exp', $sItem_exp, PDO::PARAM_STR); 
+        $stmh->bindValue(':item_stock', $sItem_stock, PDO::PARAM_STR); 
+        $stmh->bindValue(':category_id', $sCategory_id, PDO::PARAM_STR); 
+        $stmh->bindValue(':sales_stop', $sSales_Stop, PDO::PARAM_STR); 
+ 
+        //SQL文の実行 
+        $stmh->execute(); 
+ 
+        //登録成功を返却 
+        return true; 
+ 
+    } catch (PDOException $Exception) { 
+ 
+        //例外が発生したらエラーを出力 
+        die('実行エラー :' . $Exception->getMessage() . "<br />"); 
+ 
+        //登録失敗を返却 
+        return false; 
+ 
+    } 
+ 
+}
+
+
 ?>

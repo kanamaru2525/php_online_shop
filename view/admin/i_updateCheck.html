@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta charset="utf-8">
+    <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="../common/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>メンバーの更新確認</h1>
+    <h2>メンバー情報</h2>
+
+    <form action="i_update.php" method="post">
+      
+        <table class="searchTbl">
+            <tr>
+                <th>ID</th>
+                <td>
+                    <?= $sItem_Id ?>
+                    <input type="hidden" name="item_id" value="<?= $sItem_Id ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>商品名</th>
+                <td>
+                    <?= $sItem_name  ?>
+                    <input type="hidden" name="item_name" value="<?= $sItem_name ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>商品価格</th>
+                <td>
+                    <?= $sItem_price  ?>
+                    <input type="hidden" name="item_price" value="<?= $sItem_price ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>商品説明</th>
+                <td>
+                    <?= $sItem_exp  ?>
+                    <input type="hidden" name="item_exp" value="<?= $sItem_exp ?>">
+                </td>
+            </tr>
+            <tr>  
+                <th>カテゴリー</th>  
+                <td>  
+                    <select name="category_id"> 
+                        <option value="">選択してください</option> 
+                        <option value="1" <?= $sCategory_id == "1" ? "selected" : "" ?>>シティロースト</option> 
+                        <option value="2" <?= $sCategory_id == "2" ? "selected" : "" ?>>フルシティロースト</option> 
+                        <option value="3" <?= $sCategory_id == "3" ? "selected" : "" ?>>アイスコーヒ</option> 
+                        <option value="4" <?= $sCategory_id == "4" ? "selected" : "" ?>>その他</option> 
+                    </select> 
+                    <br /> 
+                    <span class="err"><?= isset($arrErr['category_id']) ? $arrErr['category_id'] : "" ?></span> 
+                </td>  
+            </tr> 
+            <tr>
+                <th>商品数</th>
+                <td>
+                    <?= $sItem_stock  ?>
+                    <input type="hidden" name="item_stock" value="<?= $sItem_stock ?>">
+                </td>
+            </tr>
+            <tr>   
+                <th>販売管理</th>   
+                <td>   
+                    <input type="radio" name="Sales_Stop" value="0"  <?= $sSales_Stop == "0" ? "checked" : "" ?>> 販売中  
+                    <input type="radio" name="Sales_Stop" value="1"  <?= $sSales_Stop == "1" ? "checked" : "" ?>> 販売停止  
+                    <br />  
+                    <span class="err"><?= isset($arrErr['sales_stop']) ? $arrErr['sales_stop'] : "" ?></span>  
+                </td>   
+            </tr> 
+        </table>
+
+        <div class="btnArea clearfix">
+            <input type="button" class="btn" value="修正" onclick="javascript:history.back();">
+            <input type="submit" class="btn" value="更新">
+            <input type="hidden" name="step" value="2" />
+        </div>
+    </form>
+
+    <a href="index.php">トップページへ戻る</a><br />
+
+</body>
+</html>
