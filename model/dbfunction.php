@@ -1041,7 +1041,7 @@ function AdminSelectItem($keyword, $sItem_Id, $sSales_Stop) {
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND "; 
             $sWhere .= "item_id = :item_id "; 
         } 
-        
+
         if ($sSales_Stop !== null) {  
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";  
             $sWhere .= "sales_stop = :sales_stop ";  
@@ -1184,6 +1184,43 @@ function updateItem($sItem_Id, $sItem_name, $sItem_price, $sItem_exp, $sCategory
  
     } 
  
+}
+
+function deleteItem($sItem_Id){
+
+	//データベース接続関数の呼び出し
+	$pdo = db_connect();
+
+	try {
+
+		//データ検索の条件
+		$sql = "DELETE FROM item 
+				WHERE  item_id = :item_id
+		";
+		
+		//ステートメントハンドラを作成
+		$stmh = $pdo->prepare($sql);
+
+        
+        echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
+		
+		//バインドの実行
+		$stmh->bindValue(':item_id', $sItem_Id,  PDO::PARAM_INT);
+		
+		//SQL文の実行
+		$stmh->execute();
+		
+		//登録成功を返却
+        echo "削除成功<br />";
+		return true;
+	
+	} catch (PDOException $Exception) {
+        echo '実行エラー :' . $Exception->getMessage() . "<br />";
+        echo 'エラーコード :' . $Exception->getCode() . "<br />";
+        echo 'トレース情報 :' . $Exception->getTraceAsString() . "<br />";
+        return false;
+    }
+
 }
 
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta charset="utf-8">
+    <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="../common/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1 class="notice">商品の削除</h1>
+    <h2>商品情報</h2>
+  
+
+    <form action="i_delete.php" method="post">
+      
+        <table class="searchTbl">
+            <tr>
+                <th>ID</th>
+                <td>
+                    <?= $sItem_Id ?>
+                    <input type="hidden" name="item_id" value="<?= $sItem_Id ?>">
+                </td>
+            </tr>
+            
+            <tr>
+                <th>商品名</th>
+                <td>
+                    <?= $sItem_name ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>商品価格</th>
+                <td>
+                    <?= $sItem_price ?>
+                </td>
+            </tr>
+
+            <tr>
+                <th>商品説明</th>
+                <td>
+                    <?= $sItem_exp ?>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>商品数</th>
+                <td>
+                    <?= $sItem_stock ?>
+                </td>
+            </tr>
+            
+
+            <tr>
+                <th>カテゴリー</th>
+                <td>
+                    <?= $sCategory_id ?>
+                </td>
+
+            </tr>
+
+            <tr>
+                <th>販売中止</th>
+                <td>
+                    <?= $sSales_Stop ?>
+                </td>
+
+            </tr>   
+
+
+        </table>
+
+        <div class="btnArea clearfix">
+            <input type="button" class="btn" value="中止" onclick="javascript:history.back();">
+            <input type="submit" class="btn" value="削除">
+            <input type="hidden" name="step" value="1" />
+        </div>
+    </form>
+  
+    <a href="index.php">トップページへ戻る</a><br />
+
+</body>
+</html>
