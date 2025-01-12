@@ -911,15 +911,18 @@ function insertMember($sName, $sAge,$sTelephone,$sPostcode,$sMail,$sAddress,$sLo
 		//ステートメントハンドラを作成
 		$stmh = $pdo->prepare($sql);
 		
-		//バインドの実行
-		$stmh->bindValue(':name',  $sName,  PDO::PARAM_STR);
-		$stmh->bindValue(':age', $sAge, PDO::PARAM_INT);
-        $stmh->bindValue(':telephone', $sTelephone, PDO::PARAM_STR);
-        $stmh->bindValue(':postcode', $sPostcode, PDO::PARAM_STR);
-        $stmh->bindValue(':mail_address', $sMail, PDO::PARAM_STR);
-        $stmh->bindValue(':user_address', $sAddress, PDO::PARAM_STR);
-        $stmh->bindValue(':login_id', $sLogin_Id, PDO::PARAM_STR);
-        $stmh->bindValue(':login_pass', $sLogin_Pass, PDO::PARAM_STR);        
+        var_dump($sPostcode, $sAddress); 
+		
+        // バインドの実行
+        $stmh->bindValue(':name',  $sName,  PDO::PARAM_STR); 
+        $stmh->bindValue(':age', $sAge, PDO::PARAM_INT); 
+        $stmh->bindValue(':telephone', $sTelephone, PDO::PARAM_STR); 
+        $stmh->bindValue(':postcode', $sPostcode, PDO::PARAM_STR);  // 郵便番号
+        $stmh->bindValue(':mail_address', $sMail, PDO::PARAM_STR); 
+        $stmh->bindValue(':user_address', $sAddress, PDO::PARAM_STR); // 住所
+        $stmh->bindValue(':login_id', $sLogin_Id, PDO::PARAM_STR); 
+        $stmh->bindValue(':login_pass', $sLogin_Pass, PDO::PARAM_STR);         
+     
 
 		//SQL文の実行
 		$stmh->execute();
@@ -943,7 +946,7 @@ function insertMember($sName, $sAge,$sTelephone,$sPostcode,$sMail,$sAddress,$sLo
  * $sFirstName：名前
  * $sLastName：苗字
  ****************************************/
-function updateMember($sMemberId, $sFirstName, $sLastName){
+function updateMember($sMemberId,$sName, $sAge,$sTelephone,$sPostcode,$sMail,$sAddress,$sLogin_Id,$sLogin_Pass){
 
 	//データベース接続関数の呼び出し
 	$pdo = db_connect();
@@ -953,9 +956,15 @@ function updateMember($sMemberId, $sFirstName, $sLastName){
 		//データ検索の条件
 		$sql = "UPDATE member 
 				SET
-					last_name = :last_name, 
-				    first_name = :first_name
-				WHERE
+					name = :name,  
+                    age = :age,
+                    telephone = :telephone,
+                    postcode = :postcode,
+                    mail_address = :mail_address,
+                    user_address = :user_address,
+                    login_id = :login_id,
+                    login_pass = :login_pass   
+                WHERE
 					id = :id
 		";
 		
@@ -964,8 +973,14 @@ function updateMember($sMemberId, $sFirstName, $sLastName){
 		
 		//バインドの実行
 		$stmh->bindValue(':id',         $sMemberId,  PDO::PARAM_INT);
-		$stmh->bindValue(':last_name',  $sLastName,  PDO::PARAM_STR);
-		$stmh->bindValue(':first_name', $sFirstName, PDO::PARAM_STR);
+        $stmh->bindValue(':name',       $sName,     PDO::PARAM_STR);
+        $stmh->bindValue(':age',        $sAge,      PDO::PARAM_INT);
+        $stmh->bindValue(':telephone',  $sTelephone, PDO::PARAM_STR);
+        $stmh->bindValue(':postcode',   $sPostcode, PDO::PARAM_STR);
+        $stmh->bindValue(':mail_address', $sMail, PDO::PARAM_STR);
+        $stmh->bindValue(':user_address', $sAddress, PDO::PARAM_STR);
+        $stmh->bindValue(':login_id', $sLogin_Id, PDO::PARAM_STR);
+        $stmh->bindValue(':login_pass', $sLogin_Pass, PDO::PARAM_STR);
 		
 		//SQL文の実行
 		$stmh->execute();
