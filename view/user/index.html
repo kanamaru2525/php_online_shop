@@ -61,11 +61,12 @@
 		<div class="card s3">
 			<div class="card-image">
 				<img src="../../photo/<?php print $data['item_id']; ?>.jpg" style="width: 100%;">
-				<span class="card-title"><?php print $data['item_name']; ?></span>
+				<span class="card-title" style="color: #212121;"><?php print $data['item_name']; ?></span>
 			</div>
 			<div class="card-content" style="display: flex; flex-direction: column; padding: 1rem; gap: 10px;">
 				<div class="chip">値段: <?php print number_format($data['item_price']); ?>円</div>
 				<div class="chip">カテゴリー: <?php print $data['category_name']; ?></div>
+				
 			</div>
 			<div class="card-action center-align">
 				<a href="detail.php?item_id=<?php print $data['item_id']; ?>" class="btn s3">
