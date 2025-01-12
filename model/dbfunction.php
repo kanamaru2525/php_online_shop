@@ -123,8 +123,7 @@ function getUserName($sLoginId = "", $sLoginPass = ""){
 
         //データ検索のSQLを作成
         $sSql .= "SELECT ";
-        $sSql .= "   last_name, ";
-        $sSql .= "   first_name ";
+        $sSql .= "name ";
         $sSql .= "FROM ";
         $sSql .= "   member ";
         $sSql .= "WHERE ";
@@ -144,7 +143,7 @@ function getUserName($sLoginId = "", $sLoginPass = ""){
         $arrUser = $stmh->fetch(PDO::FETCH_ASSOC);
 
         //ユーザ名取得
-        $sUserName = $arrUser["last_name"] . " " . $arrUser["first_name"];
+        $sUserName = $arrUser["name"] ;
 
 
     } catch (PDOException $Exception) {
@@ -911,7 +910,6 @@ function insertMember($sName, $sAge,$sTelephone,$sPostcode,$sMail,$sAddress,$sLo
 		//ステートメントハンドラを作成
 		$stmh = $pdo->prepare($sql);
 		
-        var_dump($sPostcode, $sAddress); 
 		
         // バインドの実行
         $stmh->bindValue(':name',  $sName,  PDO::PARAM_STR); 

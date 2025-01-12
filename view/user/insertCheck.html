@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+    <meta charset="utf-8">
+    <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="../common/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1>メンバーの登録確認</h1>
+    <h2>メンバー情報</h2>
+
+    <form action="insert.php" method="post">
+      
+        <table class="searchTbl">
+            <tr>
+                <th>ID</th>
+                <td>IDは自動で番号がつきます</td>
+            </tr>
+            <tr>
+                <th>名前</th>
+                <td>
+                    <?= $sName ?>
+                    <input type="hidden" name="name" value="<?= $sName ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>年齢</th>
+                <td>
+                    <?= $sAge ?>
+                    <input type="hidden" name="age" value="<?= $sAge ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>郵便番号</th>
+                <td>
+                    <?= $sPostcode ?>
+                    <input type="hidden" name="postcode" value="<?= $sPostcode ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td>
+                    <?= $sAddress ?>
+                    <input type="hidden" name="address" value="<?= $sAddress ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td>
+                    <?= $sMail ?>
+                    <input type="hidden" name="mail" value="<?= $sMail ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td>
+                    <?= $sTelephone ?>
+                    <input type="hidden" name="telephone" value="<?= $sTelephone ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>ログインID</th>
+                <td>
+                    <?= $sLogin_Id ?>
+                    <input type="hidden" name="login_id" value="<?= $sLogin_Id ?>">
+                </td>
+            </tr>
+            <tr>
+                <th>ログインPASS</th>
+                <td>
+                    <?= $sLogin_Pass ?>
+                    <input type="hidden" name="login_pass" value="<?= $sLogin_Pass ?>">
+                </td>
+            </tr>
+        </table>
+
+        <div class="btnArea clearfix">
+            <input type="button" class="btn" value="修正" onclick="javascript:history.back();">
+            <input type="submit" class="btn" value="登録">
+            <input type="hidden" name="step" value="2" />
+        </div>
+    </form>
+
+    <a href="index.php">トップページへ戻る</a><br />
+
+</body>
+</html>
