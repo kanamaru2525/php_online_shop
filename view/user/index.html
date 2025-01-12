@@ -24,14 +24,13 @@
 				<li><a href="login.php">ログイン</a></li>
 				<li><a href="insert.php">会員登録</a></li>
 			<?php } ?>
+			<li><a href="help.php">ヘルプ</a></li>
 		  </ul>
 		</div>
 	</nav>	  
+	
 	<div class="container">
-		
-	
-	<h4 class="header">検索条件</h4>
-	
+		<h4 class="header">検索条件</h4>
 	<form action="index.php" method="post"  style="flex: auto;">
 		<div class="s12 input-field">
 		  <input  type="text" placeholder=" " maxlength="20" name="keyword" value="<?php print $sKeyword; ?>">
@@ -61,45 +60,47 @@
 		<?php foreach ($arrItem as $data){ ?>
 		<div class="card s3">
 			<div class="card-image">
-			<img src="../../photo/<?php print $data['item_id']; ?>.jpg" >
-			<span class="card-title"><?php print $data['item_name']; ?></span>
-		</div>
-			<div class="card-content">
-				<div class="chip">値段:<?php print number_format($data['item_price']); ?>円</div>
-				<br style="line-height: 2em;">
-				<div class="chip">カテゴリー<?php print $data['category_name']; ?></div>
-					</tr>
-				</table>
-				
-				
+				<img src="../../photo/<?php print $data['item_id']; ?>.jpg" style="width: 100%;">
+				<span class="card-title"><?php print $data['item_name']; ?></span>
 			</div>
-			<div class="card-action center-align" >
-				<a href="detail.php?item_id=<?php print $data['item_id']; ?>" class="btn s3" >
+			<div class="card-content" style="display: flex; flex-direction: column; padding: 1rem; gap: 10px;">
+				<div class="chip">値段: <?php print number_format($data['item_price']); ?>円</div>
+				<div class="chip">カテゴリー: <?php print $data['category_name']; ?></div>
+			</div>
+			<div class="card-action center-align">
+				<a href="detail.php?item_id=<?php print $data['item_id']; ?>" class="btn s3">
 					詳細を見る
 				</a>
 				<?php if ($loginOk === true){ ?>
 				<form action="index.php" method="post" style="margin-bottom: 0;">
-					<div class="row valign-wrapper" style="margin-bottom: 0;"> <!-- 横並び用の行 -->
+					<div class="row valign-wrapper" style="margin-bottom: 0;">
 						<!-- セレクトボックス -->
 						<div class="input-field col s6" style="margin: 0; padding: 0;">
 							<select id="form-select-6" name="item_num" class="browser-default">
-								<?php for ($i = 1; $i < $data['item_stock']; $i++) { ?>
-									<option value="<?php print $i; ?>"><?php print $i; ?></option>
+								<?php for ($i = 1; $i <= $data['item_stock']; $i++) { ?>
+								<option value="<?php print $i; ?>"><?php print $i; ?></option>
 								<?php } ?>
 							</select>
 						</div>
 						<!-- ボタン -->
 						<div class="input-field col s6" style="margin: 0; padding: 0;">
-							<button type="submit" class="btn waves-effect waves-light">cart in</button>
+							<input type="hidden" name="item_id" value="<?php print $data['item_id']; ?>">
+							<input type="submit" value="cart_in" class="btn waves-effect waves-light">
 						</div>
 					</div>
 				</form>
+				<?php if ($data['item_id'] == $nItemId){ ?>
+				<div style="color: red;">
+					<?php print $resultMsg; ?>
+				</div>
 				<?php } ?>
-				
+				<?php } ?>
 			</div>
 		</div>
 		<?php } ?>
 	</div>
+	
+
 </div>
 </body>
 </html>
