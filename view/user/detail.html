@@ -4,24 +4,31 @@
   <meta charset="utf-8">
   <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="../common/css/main.css" rel="stylesheet" type="text/css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
+
 </head>
 <body>
-  <h1>商品詳細</h1>
-	<?php if($loginOk === true){ ?>
-	<div>ようこそ！ <?= $userName ?> 様</div>
-	<?php } ?>
-
-	<?php if ($loginOk === true){ ?>
-	<div>
-		<a href="cart.php">カート（<?= $cartCnt; ?>件）</a> | 
-		<a href="logout.php">ログアウト</a>
-	</div>
-	<?php } else { ?>
-	<div>
-		<a href="login.php">ログイン</a>
-	</div>
-	<?php } ?>
-
+	
+	<nav>
+		<div class="nav-wrapper">
+		 <a class="brand-logo">豆の樹</a>
+		  <ul id="nav-mobile" class="right hide-on-med-and-down">
+			<?php if($loginOk === true){ ?>
+				<li><a href="cart.php">カート（<?php print $cartCnt; ?>件）</a></li> 
+				<li><a href="">ログイン中:<?= $userName ?></a></li> 
+				<li><a href="logout.php">ログアウト</a></li>
+			<?php } else { ?>
+				<li><a href="login.php">ログイン</a></li>
+				<li><a href="insert.php">会員登録</a></li>
+			<?php } ?>
+		  </ul>
+		</div>
+	</nav>	  
+	
+	<div class="container">
 	<h2><?= $arrItem["item_name"] ?></h2>
 	<table>
 		<tr>
@@ -47,13 +54,14 @@
 			<td colspan="2">
 			<form action="?item_id=<?= $arrItem['item_id'] ?>" method="post">
 				数量：
-				<select name="item_num">
+				<select name="item_num" class="browser-default">
 				<?php for ($i = 1; $i < $arrItem['item_stock']; $i++){ ?>
 				<option value="<?= $i ?>"><?= $i ?></option>
 				<?php } ?>
 				</select>
 				<input type="submit" value="カートへ入れる">
 			</form>
+			
 			</td>
 		</tr>
 	</table>
@@ -62,5 +70,6 @@
 	<div>
 		<a href="index.php">トップページへ戻る</a>
 	</div>
+</div>
 </body>
 </html>
