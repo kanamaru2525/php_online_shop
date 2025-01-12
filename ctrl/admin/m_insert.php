@@ -133,7 +133,14 @@
     if($nStepFlg == 2 && count($arrErr) == 0){
 
         //データ登録
-        $bRet = insertMember($sName, $sAge, $sPostcode, $sAddress, $sMail, $sTelephone, $sLogin_Id, $sLogin_Pass);
+        $bRet = insertMember($sName, 
+                            $sAge, 
+                            $sTelephone, 
+                            $sPostcode, 
+                            $sMail, 
+                            $sAddress,
+                            $sLogin_Id,
+                            $sLogin_Pass);
 
         //DB登録エラーがある場合は最初のステップに戻す
         if($bRet == false){
