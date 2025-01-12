@@ -40,16 +40,19 @@
 //**************************************************
     //ID
     $sMemberId = isset($_POST['id']) ? $_POST['id'] : "";
-
     //苗字
-    $sLastName = isset($_POST['last_name']) ? $_POST['last_name'] : "";
+    $sName = isset($_POST['name']) ? $_POST['name'] : "";
+
+    $sMail = isset($_POST['mail']) ? $_POST['mail'] : "";
+
+    $sAddress = isset($_POST['address']) ? $_POST['address'] : "";
 
 
 //**************************************************
 // 検索処理
 //**************************************************
     //値を取得
-    $arrResult = selectMember($sMemberId, $sLastName);
+    $arrResult = selectMember($sMemberId,$sName,$sMail,$sAddress);
 
 
 //**************************************************

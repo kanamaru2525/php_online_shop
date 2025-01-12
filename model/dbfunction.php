@@ -814,7 +814,7 @@ function compOrder($nUserId){
  * $sMemberId：メンバーID（未指定は空白）
  * $sLastName：苗字（未指定は空白）
  ****************************************/
-function selectMember($sMemberId = "", $sLastName = ""){
+function selectMember($sMemberId = "", $sName = "", $sMail = "",$sAddress=""){
 
 	//初期化
 	$arrResult = array();
@@ -839,24 +839,42 @@ function selectMember($sMemberId = "", $sLastName = ""){
 			$sWhere .= ($sWhere == "") ? "WHERE " : "AND ";
 			$sWhere .= "id = :id ";
 		}
-		if($sLastName != ""){
+		if($sName != ""){
 			//苗字
 			$sWhere .= ($sWhere == "") ? "WHERE " : "AND ";
-			$sWhere .= "last_name LIKE :last_name ";
+			$sWhere .= "name LIKE :name ";
 		}
+        
+        if($sMail != ""){
+            $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";
+			$sWhere .= "mail_address LIKE :mail_address ";
+        }
+
+        if($sAddress != ""){
+            $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";
+			$sWhere .= "user_address LIKE :user_address ";
+        }
 		
 		//ステートメントハンドラを作成
 		$stmh = $pdo->prepare($sSql.$sWhere);
 		
-		//バインドの実行
-		if($sMemberId != ""){
-			//ID
-			$stmh->bindValue(':id',  $sMemberId, PDO::PARAM_INT);
-		}
-		if($sLastName != ""){
-			//苗字
-			$stmh->bindValue(':last_name',  "%".$sLastName."%", PDO::PARAM_STR);
-		}
+		// バインドの実行
+        if ($sMemberId != "") {
+            // ID
+            $stmh->bindValue(':id', $sMemberId, PDO::PARAM_INT);
+        }
+        if ($sName != "") {
+            // 苗字
+            $stmh->bindValue(':name', "%" . $sName . "%", PDO::PARAM_STR);
+        }
+        if ($sMail != "") {
+            // メールアドレス
+            $stmh->bindValue(':mail_address', "%" . $sMail . "%", PDO::PARAM_STR);
+        }
+        if ($sAddress != "") {
+            // 住所
+            $stmh->bindValue(':user_address', "%" . $sAddress . "%", PDO::PARAM_STR);
+        }
 
 		//SQL文の実行
 		$stmh->execute();
@@ -880,23 +898,29 @@ function selectMember($sMemberId = "", $sLastName = ""){
  * $sFirstName：名前
  * $sLastName：苗字
  ****************************************/
-function insertMember($sFirstName, $sLastName){
+function insertMember($sName, $sAge,$sTelephone,$sPostcode,$sMail,$sAddress,$sLogin_Id,$sLogin_Pass){
 
 	//データベース接続関数の呼び出し
 	$pdo = db_connect();
 
 	try {
 		//データ検索の条件
-		$sql = "INSERT INTO member (last_name, first_name)
-				VALUES (:last_name, :first_name)";
+		$sql = "INSERT INTO member (name, age, telephone, postcode, mail_address, user_address, login_id, login_pass)
+				VALUES (:name, :age, :telephone, :postcode, :mail_address, :user_address, :login_id, :login_pass)";
 		
 		//ステートメントハンドラを作成
 		$stmh = $pdo->prepare($sql);
 		
 		//バインドの実行
-		$stmh->bindValue(':last_name',  $sLastName,  PDO::PARAM_STR);
-		$stmh->bindValue(':first_name', $sFirstName, PDO::PARAM_STR);
-		
+		$stmh->bindValue(':name',  $sName,  PDO::PARAM_STR);
+		$stmh->bindValue(':age', $sAge, PDO::PARAM_INT);
+        $stmh->bindValue(':telephone', $sTelephone, PDO::PARAM_STR);
+        $stmh->bindValue(':postcode', $sPostcode, PDO::PARAM_STR);
+        $stmh->bindValue(':mail_address', $sMail, PDO::PARAM_STR);
+        $stmh->bindValue(':user_address', $sAddress, PDO::PARAM_STR);
+        $stmh->bindValue(':login_id', $sLogin_Id, PDO::PARAM_STR);
+        $stmh->bindValue(':login_pass', $sLogin_Pass, PDO::PARAM_STR);        
+
 		//SQL文の実行
 		$stmh->execute();
 

@@ -21,13 +21,18 @@
     <form action="member.php" method="post">
     <table class="searchTbl">
         <tr>
-            <th>ID</th>
-            <td><input type="text" name="id" value="<?= $sMemberId ?>" /></td>
+            <th>名前</th>
+            <td><input type="text" name="name" value="<?= $sName ?>" /></td>
         </tr>
         <tr>
-            <th>苗字</th>
-            <td><input type="text" name="last_name" value="<?= $sLastName ?>" /></td>
+            <th>メールアドレス</th>
+            <td><input type="text" name="mail" value="<?= $sMail ?>" /></td>
         </tr>
+        <tr>
+            <th>住所</th>
+            <td><input type="text" name="address" value="<?= $sAddress ?>" /></td>
+        </tr>
+
     </table>
     <div class="btnArea">
         <input type="submit" value="検索" />
@@ -39,16 +44,35 @@
     <table class="resultTbl">
     <tr>
         <th>ID</th>
-        <th>苗字</th>
         <th>名前</th>
+        <th>年齢</th>
+        <th>郵便番号</th>
+        <th>住所</th>
+        <th>メールアドレス</th>
+        <th>電話番号</th>
+        <th>ログインID</th>
+        <th>ログインPASS</th>
+        
+        
+
         <th>編集</th>
         <th>削除</th>
     </tr>
     <?php foreach($arrResult as $item){ ?>
     <tr>
         <td><?= $item['id'] ?></td>
-        <td><?= $item['last_name'] ?></td>
-        <td><?= $item['first_name'] ?></td>
+        <td><?= $item['name'] ?></td>
+        <td><?= $item['age'] ?></td>
+        
+        <td><?= $item['postcode'] ?></td>
+        <td><?= $item['user_address'] ?></td>
+        <td><?= $item['mail_address'] ?></td>
+        <td><?= $item['telephone'] ?></td>
+        
+        <td><?= $item['login_id'] ?></td>
+        <td><?= $item['login_pass'] ?></td>
+        
+
         <td class="btn">
             <form action="m_update.php" method="post">
                 <input type="submit" value="変更">
