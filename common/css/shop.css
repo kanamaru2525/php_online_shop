@@ -1,0 +1,113 @@
+/* 全体のフォント設定（Google Fontsを利用） */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f9f4;  /* 背景色を薄い緑に */
+    color: #ffffff;  /* テキストの色 */
+    margin: 0;
+    padding: 0;
+
+    /* 背景画像設定 */
+    font-family: 'Poppins', sans-serif;
+    background: url('background.jpg') no-repeat center center fixed; /* 画像のパスと設定 */
+    background-size: cover; /* 背景画像を画面に合わせて拡大・縮小 */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* ヘッダー */
+nav {
+    background-color: #2c6e49; /* ダークグリーン */
+}
+
+.nav-wrapper .brand-logo {
+    font-size: 1.8em;
+    color: #fff;
+}
+
+nav ul li a {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* 商品カード */
+.card {
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* カードを浮かせる効果 */
+}
+
+.card-title {
+    font-size: 1.5em;
+    color: #00612a; /* 緑 */
+    font-weight: 600;
+}
+
+/* 商品価格 */
+.chip {
+    background-color: #d0d0d0;
+    color: #000000;
+    font-weight: 500;
+}
+
+/* ボタン */
+.btn {
+    background-color: #2c6e49; /* 緑 */
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #1f4e32; /* 少し暗い緑 */
+}
+
+/* 入力フィールド */
+.input-field input[type="text"] {
+    border: 1px solid #2c6e49; /* 緑色の枠 */
+    border-radius: 5px;
+    padding: 10px;
+}
+
+input[type="submit"] {
+    background-color: #2c6e49; /* 緑 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #1f3a4e; /* ボタンホバー時 */
+}
+
+/* フッター */
+footer {
+    background-color: #000000; /* 緑 */
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+}
+
+footer p {
+    font-size: 1em;
+    font-weight: 300;
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+    .card {
+        margin: 10px 0;
+    }
+}
