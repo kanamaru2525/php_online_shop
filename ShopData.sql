@@ -1,14 +1,28 @@
+-- CREATE TABLE member (
+--     id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '会員ID',
+--     last_name VARCHAR(50) COMMENT '姓',
+--     first_name VARCHAR(50) COMMENT '名',
+--     age TINYINT UNSIGNED COMMENT '年齢',
+--     login_id VARCHAR(50) COMMENT 'ログインID',
+--     login_pass VARCHAR(255) COMMENT 'ログインパスワード',
+--     postcode CHAR(8) COMMENT '郵便番号', -- ハイフンをなしの場合を想定
+--     useraddress VARCHAR(100) COMMENT '住所',
+--     mailaddress VARCHAR(100) COMMENT 'メールアドレス',
+--     userpassword VARCHAR(255) COMMENT 'ユーザーのパスワード', -- 暗号化を想定
+--     PRIMARY KEY (id)
+-- );
+
+
 CREATE TABLE member (
     id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '会員ID',
-    last_name VARCHAR(50) COMMENT '姓',
-    first_name VARCHAR(50) COMMENT '名',
+    name VARCHAR(20) COMMENT '名前',
     age TINYINT UNSIGNED COMMENT '年齢',
     login_id VARCHAR(50) COMMENT 'ログインID',
     login_pass VARCHAR(255) COMMENT 'ログインパスワード',
-    postcode CHAR(8) COMMENT '郵便番号', -- ハイフンを含む場合を想定
-    useraddress VARCHAR(100) COMMENT '住所',
-    mailaddress VARCHAR(100) COMMENT 'メールアドレス',
-    userpassword VARCHAR(255) COMMENT 'ユーザーのパスワード', -- 暗号化を想定
+    telephone CHAR(13) COMMENT '電話番号', -- ハイフンをなしの場合を想定
+    postcode CHAR(8) COMMENT '郵便番号', -- ハイフンをなしの場合を想定
+    user_address VARCHAR(100) COMMENT '住所',
+    mail_address VARCHAR(100) COMMENT 'メールアドレス',
     PRIMARY KEY (id)
 );
 
