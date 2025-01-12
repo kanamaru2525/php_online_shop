@@ -2,104 +2,103 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
   <meta charset="utf-8">
-  <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="../../common/css/main.css" rel="stylesheet" type="text/css">
-  	 
-  <!-- Compiled and minified CSS -->
+  <title>シェクープルオンラインショップ</title>
+  
+  <!-- Normalize CSS (リセットCSS) -->
+  <link href="../../common/css/normalize.css" rel="stylesheet" type="text/css">
+  
+  <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
-
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../../common/css/shop.css"> <!-- 上記CSSを保存したファイル名 -->
 </head>
 <body>
-	<nav>
-		<div class="nav-wrapper">
-		 <a class="brand-logo">豆の樹</a>
-		  <ul id="nav-mobile" class="right hide-on-med-and-down">
-			<?php if($loginOk === true){ ?>
-				<li></li><a href="cart.php">カート（<?php print $cartCnt; ?>件）</a> <li></li>
-				<li><a href="">ログイン中:<?= $userName ?></a></li> 
-				<li><a href="logout.php">ログアウト</a></li>
-			<?php } else { ?>
-				<li><a href="login.php">ログイン</a></li>
-				<li><a href="insert.php">会員登録</a></li>
-			<?php } ?>
-		  </ul>
-		</div>
-	</nav>	  
-	<div class="container">
-		
-	
-	<h4 class="header">検索条件</h4>
-	
-	<form action="index.php" method="post"  style="flex: auto;">
-		<div class="s12 input-field">
-		  <input  type="text" placeholder=" " maxlength="20" name="keyword" value="<?php print $sKeyword; ?>">
-		  <label>キーワード</label>
-		</div>
+  <!-- ナビゲーションバー -->
+  <nav>
+    <div class="nav-wrapper">
+      <a class="brand-logo">シェクープルオンラインショップ</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <?php if($loginOk === true){ ?>
+          <li><a href="cart.php">カート（<?php print $cartCnt; ?>件）</a></li>
+          <li><a href="">ログイン中: <?= $userName ?></a></li> 
+          <li><a href="logout.php">ログアウト</a></li>
+        <?php } else { ?>
+          <li><a href="login.php">ログイン</a></li>
+          <li><a href="insert.php">会員登録</a></li>
+        <?php } ?>
+      </ul>
+    </div>
+  </nav>	  
 
-		<label>カテゴリー</label>
-		<div class="input-field col s12"  >
-			<select id="form-select-2" name="category_id" class="browser-default">
-				<option value=""></option>
-				<?php foreach ($arrCategory as $arr){ ?>
-				<option value="<?php print $arr['category_id']; ?>" <?php if($arr['category_id'] == $nCateId){ print "selected"; } ?>>
-				<?php print $arr['category_name']; ?>
-				</option>
-				<?php } ?>
-			</select>
-		</div>
-		<div class="btn">
-			<input type="submit" value="検索" />
-		</div>
-	</form>
+  <!-- メインコンテンツ -->
+  <div class="container">
+    <!-- 検索条件フォーム -->
+    <h4 class="header">検索条件</h4>
+    <form action="index.php" method="post">
+      <div class="s12 input-field">
+        <input type="text" placeholder="キーワードを入力" maxlength="20" name="keyword" value="<?php print $sKeyword; ?>">
+        <label>キーワード</label>
+      </div>
+      <label>カテゴリー</label>
+      <div class="input-field col s12">
+        <select id="form-select-2" name="category_id" class="browser-default">
+          <option value=""></option>
+          <?php foreach ($arrCategory as $arr){ ?>
+          <option value="<?php print $arr['category_id']; ?>" <?php if($arr['category_id'] == $nCateId){ print "selected"; } ?>>
+            <?php print $arr['category_name']; ?>
+          </option>
+          <?php } ?>
+        </select>
+      </div>
+      <div class="btn">
+        <input type="submit" value="検索">
+      </div>
+    </form>
 
-	
+    <!-- 商品一覧 -->
+    <h4 class="header">商品一覧</h4>
+    <div class="row">
+      <?php foreach ($arrItem as $data){ ?>
+      <div class="card col s12 m6 l4"> <!-- カードをレスポンシブ対応 -->
+        <div class="card-image">
+          <img src="../../photo/<?php print $data['item_id']; ?>.jpg">
+          <span class="card-title"><?php print $data['item_name']; ?></span>
+        </div>
+        <div class="card-content">
+          <div class="chip">値段: <?php print number_format($data['item_price']); ?>円</div>
+          <div class="chip">カテゴリー: <?php print $data['category_name']; ?></div>
+        </div>
+        <div class="card-action center-align">
+          <a href="detail.php?item_id=<?php print $data['item_id']; ?>" class="btn">詳細を見る</a>
+          <?php if ($loginOk === true){ ?>
+          <form action="index.php" method="post" style="margin: 0;">
+            <div class="row valign-wrapper">
+              <div class="input-field col s6">
+                <select id="form-select-6" name="item_num" class="browser-default">
+                  <?php for ($i = 1; $i <= $data['item_stock']; $i++) { ?>
+                  <option value="<?php print $i; ?>"><?php print $i; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="input-field col s6">
+                <button type="submit" class="btn waves-effect waves-light">カートに入れる</button>
+              </div>
+            </div>
+          </form>
+          <?php } ?>
+        </div>
+      </div>
+      <?php } ?>
+    </div>
+  </div>
 
-	<h4 class="header">商品一覧</h4>
-	<div class="row g-4">
-		<?php foreach ($arrItem as $data){ ?>
-		<div class="card s3">
-			<div class="card-image">
-			<img src="../../photo/<?php print $data['item_id']; ?>.jpg" >
-			<span class="card-title"><?php print $data['item_name']; ?></span>
-		</div>
-			<div class="card-content">
-				<div class="chip">値段:<?php print number_format($data['item_price']); ?>円</div>
-				<br style="line-height: 2em;">
-				<div class="chip">カテゴリー<?php print $data['category_name']; ?></div>
-					</tr>
-				</table>
-				
-				
-			</div>
-			<div class="card-action center-align" >
-				<a href="detail.php?item_id=<?php print $data['item_id']; ?>" class="btn s3" >
-					詳細を見る
-				</a>
-				<?php if ($loginOk === true){ ?>
-				<form action="index.php" method="post" style="margin-bottom: 0;">
-					<div class="row valign-wrapper" style="margin-bottom: 0;"> <!-- 横並び用の行 -->
-						<!-- セレクトボックス -->
-						<div class="input-field col s6" style="margin: 0; padding: 0;">
-							<select id="form-select-6" name="item_num" class="browser-default">
-								<?php for ($i = 1; $i < $data['item_stock']; $i++) { ?>
-									<option value="<?php print $i; ?>"><?php print $i; ?></option>
-								<?php } ?>
-							</select>
-						</div>
-						<!-- ボタン -->
-						<div class="input-field col s6" style="margin: 0; padding: 0;">
-							<button type="submit" class="btn waves-effect waves-light">cart in</button>
-						</div>
-					</div>
-				</form>
-				<?php } ?>
-				
-			</div>
-		</div>
-		<?php } ?>
-	</div>
-</div>
+  <!-- フッター -->
+  <footer>
+    <p>Copyright © 2025 シェクープルオンラインショップ. All rights reserved.</p>
+  </footer>
+
+  <!-- Materialize JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
 </body>
 </html>
