@@ -59,7 +59,7 @@
         //メンバー情報の取得
         $arrResult = selectMember($sMemberId);
 
-        //苗字
+        //名前
         $sName = $arrResult[0]['name'];
 
         //年齢

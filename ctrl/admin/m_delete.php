@@ -30,11 +30,30 @@
         //メンバー情報の取得
         $arrResult = selectMember($sMemberId);
 
-        //苗字
-        $sLastName = $arrResult[0]['last_name'];
+       //名前
+       $sName = $arrResult[0]['name'];
 
-        //名前
-        $sFirstName = $arrResult[0]['first_name'];
+       //年齢
+       $sAge = $arrResult[0]['age'];
+       
+       //郵便番号
+       $sPostcode = $arrResult[0]['postcode'];
+       
+       //住所
+       $sAddress = $arrResult[0]['user_address'];
+
+       //メールアドレス
+       $sMail = $arrResult[0]['mail_address'];
+       
+       //電話番号
+       $sTelephone = $arrResult[0]['telephone'];
+
+       //ログインID
+       $sLogin_Id = $arrResult[0]['login_id'];
+
+       //ログインパスワード
+       $sLogin_Pass = $arrResult[0]['login_pass'];
+
     }
 
 //**************************************************
