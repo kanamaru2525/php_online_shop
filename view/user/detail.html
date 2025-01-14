@@ -60,7 +60,8 @@
 				<option value="<?= $i ?>"><?= $i ?></option>
 				<?php } ?>
 				</select>
-				<input type="submit" value="カートへ入れる">
+				<input type="hidden" name="item_id" value="<?php print $data['item_id']; ?>">
+				<input type="submit" value="cart_in" class="btn waves-effect waves-light">
 			</form>
 			
 			</td>
