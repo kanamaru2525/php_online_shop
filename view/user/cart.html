@@ -71,8 +71,16 @@
 	</tr>
 	<?php } ?>
 	<tr>
-		<th colspan="4">合計</th>
+		<th colspan="4">小計</th>
 		<td><?php print number_format($nTotalPrice) ?>円</td>
+	</tr>
+	<tr>
+		<th colspan="4">消費税</th>
+		<td><?php print number_format($nTax) ?>円</td>
+	</tr>
+	<tr>
+		<th colspan="4">合計</th>
+		<td><?php print number_format($nTaxTotalPrice) ?>円</td>
 	</tr>
 	</table>
 	<form action="order.php" method="post">

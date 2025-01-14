@@ -74,6 +74,15 @@
     foreach($arrCart as $item){
         $nTotalPrice += $item['item_price'] * $item['item_num'];
     }
+    //消費税を計算
+    $nTax=0;
+    foreach($arrCart as $item){
+        $nTax += $item['item_price'] * $item['item_num']*0.1;
+    }
+    //消費税込みの合計金額を計算
+    $nTaxTotalPrice =0;
+    $nTaxTotalPrice = $nTotalPrice+$nTax;
+
 
 //**************************************************
 // HTMLを出力
