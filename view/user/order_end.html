@@ -4,17 +4,32 @@
   <meta charset="utf-8">
   <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="../common/css/main.css" rel="stylesheet" type="text/css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
+
 </head>
 <body>
-  <h1>購入完了</h1>
-	<?php if($loginOk === true){ ?>
-	<div>ようこそ！ <?= $userName ?> 様</div>
-	<?php } ?>
-	<div>
-		<a href="index.php">商品一覧へ</a> | 
-		<a href="logout.php">ログアウト</a>
-	</div>
-
+	<nav>
+		<div class="nav-wrapper">
+		 <a class="brand-logo">豆の樹</a>
+		  <ul id="nav-mobile" class="right hide-on-med-and-down">
+			<?php if($loginOk === true){ ?>
+				<li><a href="">ログイン中:<?= $userName ?></a></li> 
+				<li><a href="logout.php">ログアウト</a></li>
+				<li><a href="index.php">商品一覧へ</a></li>
+				
+			<?php } else { ?>
+				<li><a href="login.php">ログイン</a></li>
+				<li><a href="insert.php">会員登録</a></li>
+			<?php } ?>
+			<li><a href="help.php">ヘルプ</a></li>
+		  </ul>
+		</div>
+	</nav>	  
+<div class="container">	
+  <h5>購入完了</h5>
 	<div>ありがとうございます。商品到着までお待ちください。</div>
 
 	<br />
@@ -22,6 +37,6 @@
 	<div>
 		<a href="index.php">トップページへ戻る</a>
 	</div>
-
+	</div>
 </body>
 </html>

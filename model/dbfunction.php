@@ -360,6 +360,9 @@ function selectItem($keyword, $categoryId){
             $sWhere .= ($sWhere == "") ? "WHERE " : "AND ";
             $sWhere .= "A.category_id = :category_id ";
         }
+        // 販売管理が0のものを条件に追加
+        $sWhere .= ($sWhere == "") ? "WHERE " : "AND "; 
+        $sWhere .= "A.sales_stop = 0 "; 
 
         //ステートメントハンドラを作成
         $stmh = $pdo->prepare($sSql.$sWhere);
@@ -373,6 +376,9 @@ function selectItem($keyword, $categoryId){
             //カテゴリID
             $stmh->bindValue(':category_id',  $categoryId, PDO::PARAM_INT);
         }
+
+        
+
 
         //SQL文の実行
         $stmh->execute();

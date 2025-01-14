@@ -4,15 +4,31 @@
   <meta charset="utf-8">
   <link href="../common/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="../common/css/main.css" rel="stylesheet" type="text/css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.1.1/dist/js/materialize.min.js"></script>
+
 </head>
 <body>
-  <h1>購入確認</h1>
-	<div>ようこそ！ <?= $userName ?> 様</div>
-	<div>
-		<a href="index.php">商品一覧へ</a> | 
-		<a href="logout.php">ログアウト</a>
-	</div>
-
+	<nav>
+		<div class="nav-wrapper">
+		 <a class="brand-logo">豆の樹</a>
+		  <ul id="nav-mobile" class="right hide-on-med-and-down">
+			<?php if($loginOk === true){ ?>
+				<li><a href="">ログイン中:<?= $userName ?></a></li> 
+				<li><a href="logout.php">ログアウト</a></li>
+				<li><a href="index.php">商品一覧へ</a></li>
+				
+			<?php } else { ?>
+				<li><a href="login.php">ログイン</a></li>
+				<li><a href="insert.php">会員登録</a></li>
+			<?php } ?>
+			<li><a href="help.php">ヘルプ</a></li>
+		  </ul>
+		</div>
+	</nav>
+  <h5>購入確認</h5>
 	<table class="resultTbl">
 	<tr>
 		<th>画像</th>
@@ -23,7 +39,7 @@
 	</tr>
 	<?php foreach ($arrCart as $data){ ?>
 	<tr>
-		<td><img src="../photo/<?php print $data['item_id'] ?>.jpg" style="width:40px;"></td>
+		<td><img src="../../photo/<?php print $data['item_id'] ?>.jpg" style="width:40px;"></td>
 		<td><?php print $data['item_name']; ?></td>
 		<td><?php print number_format($data['item_price']); ?>円</td>
 		<td><?php print $data['item_num']; ?></td>
