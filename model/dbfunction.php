@@ -1245,7 +1245,7 @@ function deleteItem($sItem_Id){
 		$stmh = $pdo->prepare($sql);
 
         
-        echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
+        //echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
 		
 		//バインドの実行
 		$stmh->bindValue(':item_id', $sItem_Id,  PDO::PARAM_INT);
@@ -1254,7 +1254,7 @@ function deleteItem($sItem_Id){
 		$stmh->execute();
 		
 		//登録成功を返却
-        echo "削除成功<br />";
+       // echo "削除成功<br />";
 		return true;
 	
 	} catch (PDOException $Exception) {

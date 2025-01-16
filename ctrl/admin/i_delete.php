@@ -28,7 +28,7 @@
 //**************************************************
     if($nStepFlg == ""){
     //メンバー情報の取得
-        $arrResult =  AdminSelectItem("", $sItem_Id, "");
+        $arrResult =  AdminSelectItem("", $sItem_Id, null);
         $sItem_name = $arrResult[0]['item_name'];
         $sItem_price = $arrResult[0]['item_price'];
         $sItem_exp = $arrResult[0]['item_exp'];
@@ -43,9 +43,9 @@
 //**************************************************
     if ($nStepFlg == "1"){
         //確認画面でOKなら削除
-        echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
+        //echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
         $sItem_Id = (int)$sItem_Id;
-        echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
+        //echo "削除する item_id: " . htmlspecialchars($sItem_Id, ENT_QUOTES) . "<br />";
         $bRet = deleteItem($sItem_Id);
 
         //DB登録エラーがある場合は最初のステップに戻す

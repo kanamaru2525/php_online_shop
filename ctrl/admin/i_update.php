@@ -99,8 +99,6 @@ if($nStepFlg == 1 || $nStepFlg == 2){
         $arrErr['item_stock'] = "販売停止は半角英数字で入力してください";  
     }
 
-    echo "sSales_Stopの確認<br>";
-    echo $sSales_Stop;
 
     // 販売管理 
     if ($sSales_Stop == "") { 
